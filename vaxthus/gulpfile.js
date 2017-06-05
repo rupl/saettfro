@@ -1,12 +1,25 @@
-// Assigning modules to local variables
-var gulp = require('gulp');
+// Gulp utils
+var gulp = require('gulp-help')(require('gulp'));
+var u = require('gulp-util');
+var log = u.log;
+var c = u.colors;
+var spawn = require('child_process').spawn;
+var plumber = require('gulp-plumber');
+var sequence = require('run-sequence');
+var parallel = require('concurrent-transform');
+var os = require('os');
+
+// Include Our Plugins
 var less = require('gulp-less');
-var browserSync = require('browser-sync').create();
+var browserSync = require('browser-sync');
 var header = require('gulp-header');
 var cleanCSS = require('gulp-clean-css');
 var rename = require("gulp-rename");
 var uglify = require('gulp-uglify');
 var pkg = require('./package.json');
+
+// Deployment debugging
+log(c.yellow('Detected environment: ' + (process.env.NODE_ENV || 'local')));
 
 // Set the banner content
 var banner = ['/*!\n',
@@ -17,10 +30,14 @@ var banner = ['/*!\n',
   ''
 ].join('');
 
-// Default task
-gulp.task('default', ['less', 'css', 'js', 'copy']);
+// -----------------------------------------------------------------------------
+// Default task — builds site for development
+// -----------------------------------------------------------------------------
+gulp.task('default', ['less', 'css', 'js', 'copy', 'jekyll']);
 
-// Less task to compile the less files and add the banner
+// -----------------------------------------------------------------------------
+// Less processing
+// -----------------------------------------------------------------------------
 gulp.task('less', function() {
   return gulp.src('less/freelancer.less')
     .pipe(less())
@@ -31,7 +48,9 @@ gulp.task('less', function() {
     }))
 });
 
-// Minify CSS
+// -----------------------------------------------------------------------------
+// CSS processing
+// -----------------------------------------------------------------------------
 gulp.task('css', function() {
   return gulp.src('css/freelancer.css')
     .pipe(cleanCSS({ compatibility: 'ie8' }))
@@ -42,7 +61,9 @@ gulp.task('css', function() {
     }))
 });
 
-// Minify JS
+// -----------------------------------------------------------------------------
+// JS processing
+// -----------------------------------------------------------------------------
 gulp.task('js', function() {
   return gulp.src('js/freelancer.js')
     .pipe(uglify())
@@ -54,7 +75,9 @@ gulp.task('js', function() {
     }))
 });
 
+// -----------------------------------------------------------------------------
 // Copy Bootstrap core files from node_modules to vendor directory
+// -----------------------------------------------------------------------------
 gulp.task('bootstrap', function() {
   return gulp.src([
       'node_modules/bootstrap/dist/**/*',
@@ -65,7 +88,9 @@ gulp.task('bootstrap', function() {
     .pipe(gulp.dest('vendor/bootstrap'))
 })
 
+// -----------------------------------------------------------------------------
 // Copy jQuery core files from node_modules to vendor directory
+// -----------------------------------------------------------------------------
 gulp.task('jquery', function() {
   return gulp.src([
       'node_modules/jquery/dist/jquery.js',
@@ -74,7 +99,9 @@ gulp.task('jquery', function() {
     .pipe(gulp.dest('vendor/jquery'))
 })
 
+// -----------------------------------------------------------------------------
 // Copy Font Awesome core files from node_modules to vendor directory
+// -----------------------------------------------------------------------------
 gulp.task('fontawesome', function() {
   return gulp.src([
       'node_modules/font-awesome/**',
@@ -87,10 +114,23 @@ gulp.task('fontawesome', function() {
     .pipe(gulp.dest('vendor/font-awesome'))
 })
 
+// -----------------------------------------------------------------------------
 // Copy all third party dependencies from node_modules to vendor directory
+// -----------------------------------------------------------------------------
 gulp.task('copy', ['bootstrap', 'jquery', 'fontawesome']);
 
-// Configure the browserSync task
+// -----------------------------------------------------------------------------
+// Jekyll
+// -----------------------------------------------------------------------------
+gulp.task('jekyll', 'Compiles Jekyll site in dev mode.', function() {
+  bs.notify('Jekyll building...');
+  return spawn('bundle', ['exec', 'jekyll', 'build', '--config=_config.yml,_config.dev.yml', '--drafts'], {stdio: 'inherit'})
+    .on('close', reload);
+});
+
+// -----------------------------------------------------------------------------
+// BrowserSync
+// -----------------------------------------------------------------------------
 gulp.task('browserSync', function() {
   browserSync.init({
     server: {
@@ -99,7 +139,9 @@ gulp.task('browserSync', function() {
   })
 })
 
-// Watch Task that compiles LESS and watches for HTML or JS changes and reloads with browserSync
+// -----------------------------------------------------------------------------
+// Watch files for development
+// -----------------------------------------------------------------------------
 gulp.task('dev', ['browserSync', 'less', 'css', 'js'], function() {
   gulp.watch('less/*.less', ['less']);
   gulp.watch('css/*.css', ['css']);
