@@ -1,32 +1,12 @@
 /*!
  * Start Bootstrap - Freelancer v1.1.0 (http://startbootstrap.com/template-overviews/freelancer)
- * Copyright 2013-2016 Start Bootstrap
+ * Copyright 2013-2017 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
 body {
   font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   overflow-x: hidden;
 }
-
-/* detta är varningsrutorna, info */
-
-.info{
-border: 1px solid;
-margin: 10px 0px;
-padding:15px 10px 15px 50px;
-background-repeat: no-repeat;
-background-position: 10px center;
-}
-
-
-.info {
-color: #00529B;
-background-color: #BDE5F8;
-background-image: url('info.png');
-}
-
-
-
 p {
   font-size: 20px;
 }
@@ -87,12 +67,6 @@ hr.star-primary:after {
 .img-centered {
   margin: 0 auto;
 }
-
-.img-responsive{
-  width: 500;
-  height: 500;
-}
-
 header {
   text-align: center;
   background: #18BC9C;
@@ -215,13 +189,6 @@ section.success {
   background: #18BC9C;
   color: white;
 }
-
-section.test{
-  background: #18BC9C;
-  color: white;
-}
-
-
 @media (max-width: 767px) {
   section {
     padding: 75px 0;
@@ -344,14 +311,6 @@ footer .footer-below {
   padding: 25px 0;
   background-color: #233140;
 }
-
-
-.resize{
-  width: 100px;
-  height: auto;
-}
-
-
 .btn-outline {
   color: white;
   font-size: 20px;
@@ -368,26 +327,6 @@ footer .footer-below {
   background: white;
   border: solid 2px white;
 }
-
-.btn-outlinez {
-  color: black;
-  font-size: 20px;
-  border: solid 2px black;
-  background: transparent;
-  transition: all 0.3s ease-in-out;
-  margin-top: 15px;
-}
-.btn-outlinez:hover,
-.btn-outlinez:focus,
-.btn-outlinez:active,
-.btn-outlinez.active {
-  color: #18BC9C;
-  background: black;
-  border: solid 2px black;
-}
-
-
-
 .btn-primary {
   color: white;
   background-color: #2C3E50;
@@ -472,59 +411,6 @@ fieldset[disabled] .btn-success.active {
   color: #18BC9C;
   background-color: white;
 }
-
-/* test */
-
-
-.btn-success {
-  color: white;
-  background-color: #18BC9C;
-  border-color: #18BC9C;
-  font-weight: 700;
-}
-.btn-test:hover,
-.btn-test:focus,
-.btn-test:active,
-.btn-test.active,
-.open .dropdown-toggle.btn-test {
-  color: white;
-  background-color: #cc99ff;
-  border-color: #11866f;
-}
-.btn-test:active,
-.btn-test.active,
-.open .dropdown-toggle.btn-test {
-  background-image: none;
-}
-.btn-test.disabled,
-.btn-test[disabled],
-fieldset[disabled] .btn-test,
-.btn-test.disabled:hover,
-.btn-test[disabled]:hover,
-fieldset[disabled] .btn-test:hover,
-.btn-test.disabled:focus,
-.btn-test[disabled]:focus,
-fieldset[disabled] .btn-test:focus,
-.btn-test.disabled:active,
-.btn-test[disabled]:active,
-fieldset[disabled] .btn-test:active,
-.btn-test.disabled.active,
-.btn-test[disabled].active,
-fieldset[disabled] .btn-test.active {
-  background-color: #cc99ff;
-  border-color: #18BC9C;
-}
-.btn-test .badge {
-  color: #18BC9C;
-  background-color: white;
-}
-
-
-
-
-
-
-
 .btn-social {
   display: inline-block;
   height: 50px;
@@ -617,8 +503,3 @@ fieldset[disabled] .btn-test.active {
   opacity: 0;
   display: none;
 }
-
-pre {
-    text-align: left;
-    white-space: pre-line;
-  }
