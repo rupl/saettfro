@@ -1,2 +1,3 @@
 # ignore the following files and directories
+_site
 node_modules

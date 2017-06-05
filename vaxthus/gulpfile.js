@@ -10,8 +10,9 @@ var parallel = require('concurrent-transform');
 var os = require('os');
 
 // Include Our Plugins
+var bs = require('browser-sync');
+var reload = bs.reload;
 var less = require('gulp-less');
-var browserSync = require('browser-sync');
 var header = require('gulp-header');
 var cleanCSS = require('gulp-clean-css');
 var rename = require("gulp-rename");
@@ -43,7 +44,7 @@ gulp.task('less', function() {
     .pipe(less())
     .pipe(header(banner, { pkg: pkg }))
     .pipe(gulp.dest('css'))
-    .pipe(browserSync.reload({
+    .pipe(bs.reload({
       stream: true
     }))
 });
@@ -56,7 +57,7 @@ gulp.task('css', function() {
     .pipe(cleanCSS({ compatibility: 'ie8' }))
     .pipe(rename({ suffix: '.min' }))
     .pipe(gulp.dest('css'))
-    .pipe(browserSync.reload({
+    .pipe(bs.reload({
       stream: true
     }))
 });
@@ -70,7 +71,7 @@ gulp.task('js', function() {
     .pipe(header(banner, { pkg: pkg }))
     .pipe(rename({ suffix: '.min' }))
     .pipe(gulp.dest('js'))
-    .pipe(browserSync.reload({
+    .pipe(bs.reload({
       stream: true
     }))
 });
@@ -129,10 +130,10 @@ gulp.task('jekyll', 'Compiles Jekyll site in dev mode.', function() {
 });
 
 // -----------------------------------------------------------------------------
-// BrowserSync
+// bs
 // -----------------------------------------------------------------------------
-gulp.task('browserSync', function() {
-  browserSync.init({
+gulp.task('browser-sync', function() {
+  bs.init({
     server: {
       baseDir: ''
     },
@@ -142,8 +143,9 @@ gulp.task('browserSync', function() {
 // -----------------------------------------------------------------------------
 // Watch files for development
 // -----------------------------------------------------------------------------
-gulp.task('dev', ['browserSync', 'less', 'css', 'js'], function() {
+gulp.task('dev', ['browser-sync', 'less', 'css', 'js'], function() {
   gulp.watch('less/*.less', ['less']);
   gulp.watch('css/*.css', ['css']);
   gulp.watch('js/**/*.js', ['js']);
+  gulp.watch(['**/*.html', '!_site/**/*.*'], ['jekyll']);
 });
